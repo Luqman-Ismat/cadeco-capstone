@@ -22,6 +22,17 @@ img { max-width: 100%; display: block; }
 .fade-in   { animation: fadeIn  400ms ease-out both; }
 .slide-up  { animation: slideUp 500ms ease-out both; }
 .spin      { animation: spin 1s linear infinite; }
+.lift-hover { transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease; }
+.lift-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+.metric-grid > div {
+  animation: slideUp 500ms ease-out both;
+}
+.metric-grid > div:nth-child(2) { animation-delay: 60ms; }
+.metric-grid > div:nth-child(3) { animation-delay: 120ms; }
+.metric-grid > div:nth-child(4) { animation-delay: 180ms; }
 
 /* ─── SCROLLBARS ─── */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
@@ -34,3 +45,28 @@ img { max-width: 100%; display: block; }
 
 /* ─── UTILITIES ─── */
 .no-select { user-select: none; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .mobile-section {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+  .download-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .lift-hover:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

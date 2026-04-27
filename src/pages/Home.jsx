@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, BarChart3, Download, Users, AlertTriangle, CheckCircle2, Zap, MapPin, Layers } from 'lucide-react';
 import { C, FONTS, fmt } from '../theme';
 import { Btn, StatCard } from '../components/UI.jsx';
-import { PROJECT, totalCurrent, totalProposed, nvaCurrent, nvaProposed, orderMetrics, capacity } from '../data/projectData.js';
+import { PROJECT, headlineCycle, nvaCurrent, nvaProposed, orderMetrics, capacity } from '../data/projectData.js';
 
 export default function Home() {
   return (
     <>
       {/* ═══════ HERO ═══════ */}
-      <section style={{
+      <section className="mobile-section" style={{
         position: 'relative',
         padding: '80px 32px 60px',
         background: `radial-gradient(ellipse at top, ${C.redBg}, transparent 70%)`,
@@ -43,7 +43,7 @@ export default function Home() {
             color: C.ink,
             maxWidth: 1100,
           }}>
-            Cutting <span style={{ color: C.red, fontStyle: 'italic', fontWeight: 500 }}>26 minutes</span> off every batch
+            Cutting <span style={{ color: C.red, fontStyle: 'italic', fontWeight: 500 }}>20 minutes</span> off every batch
             at <span style={{ color: C.red }}>Cadeco</span>'s Target picking line.
           </h1>
 
@@ -54,7 +54,7 @@ export default function Home() {
             marginTop: 28, lineHeight: 1.55,
           }}>
             A lean redesign of the partial-pallet workflow at Cadeco Industries' Deer Park facility.
-            We reduced cycle time by 90%, eliminated 98% of non-value-added activity, and cut
+            We reduced cycle time by 72%, eliminated 98% of non-value-added activity, and cut
             forklift travel by 80% — without adding headcount or new IT systems.
           </p>
 
@@ -71,14 +71,14 @@ export default function Home() {
           </div>
 
           {/* ─── Hero stats strip ─── */}
-          <div style={{
+          <div className="metric-grid" style={{
             display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
             gap: 1, marginTop: 64,
             background: C.border,
             border: `1px solid ${C.border}`,
           }}>
             {[
-              { label: 'CYCLE TIME REDUCTION', value: '90%', sub: `${totalCurrent.toFixed(1)} → ${totalProposed.toFixed(2)} min`, color: C.green },
+              { label: 'CYCLE TIME REDUCTION', value: `${headlineCycle.reduction}%`, sub: `${headlineCycle.current.toFixed(2)} → ${headlineCycle.future.toFixed(2)} min`, color: C.green },
               { label: 'NVA ELIMINATED',       value: '98%', sub: `${nvaCurrent.toFixed(1)} → ${nvaProposed.toFixed(2)} min`, color: C.red },
               { label: 'FORKLIFT TRAVEL',      value: '80%', sub: '390 → 80 ft / cycle', color: C.amber },
               { label: 'CAPACITY HEADROOM',    value: '83%', sub: `${capacity.reserved} of ${capacity.total} slots`, color: C.blue },
@@ -106,7 +106,7 @@ export default function Home() {
       </section>
 
       {/* ═══════ PROBLEM / SOLUTION ═══════ */}
-      <section style={{ padding: '80px 32px', background: C.surface }}>
+      <section className="mobile-section" style={{ padding: '80px 32px', background: C.surface }}>
         <div style={{ maxWidth: 1300, margin: '0 auto' }}>
           <div style={{
             fontSize: 10, color: C.red, letterSpacing: '0.25em',
@@ -141,7 +141,7 @@ export default function Home() {
       </section>
 
       {/* ═══════ THREE PILLARS ═══════ */}
-      <section style={{ padding: '80px 32px' }}>
+      <section className="mobile-section" style={{ padding: '80px 32px' }}>
         <div style={{ maxWidth: 1300, margin: '0 auto' }}>
           <div style={{
             fontSize: 10, color: C.red, letterSpacing: '0.25em',
@@ -194,7 +194,7 @@ export default function Home() {
       </section>
 
       {/* ═══════ DATA AT A GLANCE ═══════ */}
-      <section style={{ padding: '80px 32px', background: C.surface }}>
+      <section className="mobile-section" style={{ padding: '80px 32px', background: C.surface }}>
         <div style={{ maxWidth: 1300, margin: '0 auto' }}>
           <div style={{
             fontSize: 10, color: C.red, letterSpacing: '0.25em',
@@ -225,7 +225,7 @@ export default function Home() {
       </section>
 
       {/* ═══════ CALLOUT ═══════ */}
-      <section style={{
+      <section className="mobile-section" style={{
         padding: '80px 32px',
         background: `linear-gradient(135deg, ${C.surface} 0%, ${C.bg} 100%)`,
       }}>

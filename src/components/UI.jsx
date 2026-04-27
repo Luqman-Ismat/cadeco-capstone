@@ -36,7 +36,7 @@ export const Btn = ({ icon: Icon, children, variant = 'ghost', size = 'sm', onCl
 
 // ─── STAT CARD ────────────────────────────────────────────────────
 export const StatCard = ({ label, value, subValue, delta, deltaColor = C.green, accent = C.green, icon: Icon, mono = true }) => (
-  <div style={{
+  <div className="lift-hover" style={{
     background: C.surface,
     border: `1px solid ${C.border}`,
     borderTop: `2px solid ${accent}`,
@@ -98,7 +98,7 @@ export const SectionTitle = ({ children, sub, action }) => (
 
 // ─── PANEL ────────────────────────────────────────────────────────
 export const Panel = ({ children, title, subtitle, accent, action, padding = 24 }) => (
-  <div style={{
+  <div className="lift-hover" style={{
     background: C.surface, border: `1px solid ${C.border}`, padding,
     position: 'relative',
   }}>

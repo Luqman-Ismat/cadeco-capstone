@@ -133,6 +133,8 @@ export default function Layout({ children }) {
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .mobile-toggle { display: block !important; }
+          nav { padding: 12px 16px !important; }
+          footer { padding: 20px 16px !important; }
         }
       `}</style>
     </div>

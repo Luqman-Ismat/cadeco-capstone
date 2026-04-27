@@ -45,6 +45,16 @@ export const activities = [
   { name: 'Stretch Wrap',      cat: 'VA',  current: 5.89,  proposed: 1.25, status: 'IMPROVED'   },
 ];
 
+// Swimlane-canonical headline (per locked poster):
+// 27.43 min measured baseline → 7.64 min after applying 6-activity savings.
+// This is what every page should show as "cycle time" in headlines.
+export const headlineCycle = {
+  current: 27.43,
+  future: 7.64,
+  reduction: 72,
+  savings: 19.79,
+};
+
 const sumBy = (arr, key, filter) => arr.filter(filter).reduce((a, x) => a + x[key], 0);
 export const nvaCurrent  = sumBy(activities, 'current',  x => x.cat === 'NVA');
 export const nvaProposed = sumBy(activities, 'proposed', x => x.cat === 'NVA');
@@ -111,18 +121,18 @@ export const deliverables = [
   {
     category: 'Documentation',
     items: [
-      { name: 'Documentation Guide',          file: 'Documentation_Guide_v3.docx',          desc: '24-page master document — zone configuration, SKU assignments, role movement patterns' },
-      { name: 'SOP — Team Lead',              file: 'SOP_Team_Lead_v3.docx',                desc: 'Standard operating procedure for the Team Lead role' },
-      { name: 'SOP — Case Picker',            file: 'SOP_Case_Picker_v3.docx',              desc: 'Standard operating procedure for the Case Picker role' },
-      { name: 'SOP — Forklift Driver',        file: 'SOP_Forklift_Driver_v3.docx',          desc: 'Standard operating procedure for the Forklift Driver role' },
+      { name: 'Documentation Guide',          file: 'Documentation_Guide.docx',              desc: 'Locked baseline documentation guide with canonical poster metrics' },
+      { name: 'SOP — Team Lead',              file: 'SOP_-_Team_Lead.docx',                 desc: 'Standard operating procedure for the Team Lead role' },
+      { name: 'SOP — Case Picker',            file: 'SOP_-_Case_Picker.docx',               desc: 'Standard operating procedure for the Case Picker role' },
+      { name: 'SOP — Forklift Driver',        file: 'SOP_-_Forklift_Driver.docx',           desc: 'Standard operating procedure for the Forklift Driver role' },
     ],
   },
   {
     category: 'Diagrams',
     items: [
       { name: 'Cell Layout (proposed)',       file: 'Cell_Layout_v5.drawio',                desc: 'Top-down floor plan with zones, cell assignments, role paths' },
-      { name: 'Swimlane — Current State',     file: 'Swimlane_Current_v3.drawio',           desc: 'Pre-implementation process flow across the 3 roles' },
-      { name: 'Swimlane — Future State',      file: 'Swimlane_Future_v3.drawio',            desc: 'Post-implementation process flow across the 3 roles' },
+      { name: 'Swimlane — Current State',     file: 'Current_Swimlane.png',                 desc: 'Locked current-state swimlane from latest poster baseline' },
+      { name: 'Swimlane — Future State',      file: 'Future_Swimlane.png',                  desc: 'Locked future-state swimlane from latest poster baseline' },
       { name: 'Spaghetti Diagrams (7 SKUs)',  file: 'Spaghetti_Future_All_SKUs_v3.drawio',  desc: 'Per-SKU travel paths in the proposed state' },
       { name: 'All diagrams (master)',        file: 'All_Diagrams_v3.drawio',               desc: '10-page master file containing all diagrams' },
     ],

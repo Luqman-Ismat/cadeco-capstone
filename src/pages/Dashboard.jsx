@@ -13,7 +13,7 @@ import { Btn, StatCard, SectionTitle, Panel, ChartTooltip, th, td } from '../com
 import {
   PROJECT, paretoData, activities, travel, weeklyTrend, orderMetrics, capacity,
   nvaCurrent, nvaProposed, necCurrent, necProposed, vaCurrent, vaProposed,
-  totalCurrent, totalProposed,
+  totalCurrent, totalProposed, headlineCycle,
 } from '../data/projectData.js';
 
 const TABS = [
@@ -32,7 +32,7 @@ export default function Dashboard() {
   return (
     <>
       {/* ─── Page header ─── */}
-      <header style={{
+      <header className="mobile-section" style={{
         padding: '56px 32px 24px',
         borderBottom: `1px solid ${C.border}`,
         background: `linear-gradient(180deg, ${C.redBg} 0%, transparent 100%)`,
@@ -110,7 +110,7 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <div style={{ padding: '32px', maxWidth: 1700, margin: '0 auto' }}>
+      <div className="mobile-section" style={{ padding: '32px', maxWidth: 1700, margin: '0 auto' }}>
         <div className="fade-in" key={activeTab}>
           {activeTab === 'overview' && <OverviewTab />}
           {activeTab === 'pareto'   && <ParetoTab />}
@@ -133,7 +133,7 @@ function OverviewTab() {
     <>
       <SectionTitle sub="01 / Headline Metrics">Operational summary at a glance</SectionTitle>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 14, marginBottom: 32 }}>
-        <StatCard label="Cycle Time Reduction" value="90%" subValue="29.31 → 3.05 min" delta="−26.26 min / batch" accent={C.green} icon={Clock} />
+        <StatCard label="Cycle Time Reduction" value="72%" subValue="27.43 → 7.64 min" delta="−19.79 min / batch" accent={C.green} icon={Clock} />
         <StatCard label="NVA Eliminated" value="98%" subValue="19.35 → 0.45 min" delta="3 root causes" accent={C.red} icon={AlertTriangle} />
         <StatCard label="Forklift Travel" value="80%" subValue="390 → 80 ft / cycle" delta="Adjacent racks" accent={C.amber} icon={Truck} />
         <StatCard label="Capacity Reserved" value="83%" subValue="212 of 256 slots" delta="Room to grow" accent={C.blue} icon={Layers} />
@@ -148,7 +148,7 @@ function OverviewTab() {
         <StatCard label="Cases / Week" value={fmt(orderMetrics.casesPerWeek)} subValue="9-week average" accent={C.muted} />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', gap: 20 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', gap: 20 }}>
         <Panel subtitle="03 / Cycle Time" title="Before vs After Composition" accent={C.green}>
           <CycleStackChart />
         </Panel>
@@ -297,10 +297,10 @@ function CycleTab() {
     <>
       <SectionTitle sub="01 / Cycle Time Reduction">Per-batch activity breakdown</SectionTitle>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 14, marginBottom: 32 }}>
-        <StatCard label="Cycle Current"  value={totalCurrent.toFixed(2)}  subValue="min / batch" accent={C.red} />
-        <StatCard label="Cycle Proposed" value={totalProposed.toFixed(2)} subValue="min / batch" accent={C.green} />
-        <StatCard label="Time Saved"     value={(totalCurrent-totalProposed).toFixed(2)} subValue="min / batch"
-          delta={`${((1-totalProposed/totalCurrent)*100).toFixed(0)}% reduction`} accent={C.amber} />
+        <StatCard label="Cycle Current"  value={headlineCycle.current.toFixed(2)}  subValue="min / batch" accent={C.red} />
+        <StatCard label="Cycle Proposed" value={headlineCycle.future.toFixed(2)} subValue="min / batch" accent={C.green} />
+        <StatCard label="Time Saved"     value={headlineCycle.savings.toFixed(2)} subValue="min / batch"
+          delta={`${headlineCycle.reduction}% reduction`} accent={C.amber} />
         <StatCard label="NVA Reduction"  value={`${((1-nvaProposed/nvaCurrent)*100).toFixed(0)}%`}
           subValue={`${nvaCurrent.toFixed(2)} → ${nvaProposed.toFixed(2)} min`} accent={C.red} />
       </div>
@@ -319,6 +319,11 @@ function CycleTab() {
             <Bar dataKey="proposed" name="Proposed" fill={C.green} />
           </BarChart>
         </ResponsiveContainer>
+        <p style={{ margin: '14px 0 0', color: C.dim, fontSize: 12, lineHeight: 1.5, fontFamily: FONTS.mono }}>
+          Activity-level rows sum to ~29 min current / ~3 min future — these are the highlighted improvement targets.
+          The headline 27.43 → 7.64 cycle time on the poster is the WorkStudy+ 7 measured per-batch baseline (27.43)
+          minus the savings from these 6 activities (19.79 min).
+        </p>
       </Panel>
 
       <div style={{ marginTop: 20 }}>
@@ -487,7 +492,7 @@ function CapacityTab() {
         <StatCard label="Reserved"       value={`${capacity.reserved}`} subValue="83% available" accent={C.muted} />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', gap: 20 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', gap: 20 }}>
         <Panel subtitle="A. Allocation" title="Slot distribution across capacity" accent={C.red}>
           <div style={{ position: 'relative' }}>
             <ResponsiveContainer width="100%" height={300}>
@@ -571,7 +576,7 @@ function RolesTab() {
   return (
     <>
       <SectionTitle sub="01 / Roles & Workflow">Per-role workflow impact</SectionTitle>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: 14 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))', gap: 14 }}>
         {roles.map(r => {
           const Icon = r.icon;
           const stepDelta = r.futureSteps - r.currentSteps;
@@ -659,7 +664,7 @@ function TrendsTab() {
         </ResponsiveContainer>
       </Panel>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', gap: 20, marginTop: 20 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', gap: 20, marginTop: 20 }}>
         <Panel subtitle="B. Order metrics" title="Lines & sales orders per week" accent={C.amber}>
           <ResponsiveContainer width="100%" height={260}>
             <ComposedChart data={weeklyTrend} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>

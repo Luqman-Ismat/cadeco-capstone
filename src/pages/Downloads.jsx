@@ -21,7 +21,7 @@ const getIcon = (filename) => {
 export default function Downloads() {
   return (
     <>
-      <header style={{
+      <header className="mobile-section" style={{
         padding: '64px 32px 32px',
         background: `linear-gradient(180deg, ${C.redBg} 0%, transparent 100%)`,
       }}>
@@ -47,20 +47,20 @@ export default function Downloads() {
         </div>
       </header>
 
-      <div style={{ padding: '48px 32px 80px', maxWidth: 1200, margin: '0 auto' }}>
+      <div className="mobile-section" style={{ padding: '48px 32px 80px', maxWidth: 1200, margin: '0 auto' }}>
         {deliverables.map((cat, ci) => (
           <div key={ci} style={{ marginBottom: 56 }}>
             <SectionTitle sub={`${String(ci + 1).padStart(2, '0')} / ${cat.category}`}>
               {cat.category} ({cat.items.length})
             </SectionTitle>
-            <div style={{
+            <div className="download-grid" style={{
               display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', gap: 14,
             }}>
               {cat.items.map((item, ii) => {
                 const Icon = getIcon(item.file);
                 const ext = item.file.split('.').pop().toUpperCase();
                 return (
-                  <a key={ii} href={`/files/${item.file}`} download style={{
+                  <a key={ii} className="lift-hover" href={`/files/${item.file}`} download style={{
                     display: 'block', textDecoration: 'none',
                     background: C.surface, border: `1px solid ${C.border}`,
                     borderLeft: `2px solid ${C.red}`,
@@ -117,10 +117,11 @@ export default function Downloads() {
           borderLeft: `2px solid ${C.amber}`, fontSize: 13, color: C.inkDim,
           lineHeight: 1.6, fontFamily: FONTS.mono,
         }}>
-          <strong style={{ color: C.ink }}>Note for sponsors:</strong> All numbers in these deliverables
-          are reconciled to the locked Version 3 baseline (29.31 → 3.05 min cycle, 19.35 → 0.45 min NVA,
-          926 → 130 ft Team Lead travel, 390 → 80 ft Forklift travel). Any deltas observed in older drafts
-          have been corrected. Diagrams open in draw.io (free, web-based, no install required at app.diagrams.net).
+          <strong style={{ color: C.ink }}>Note for sponsors:</strong> All numbers in these deliverables are reconciled to
+          the locked poster baseline (27.43 → 7.64 min cycle / 72% reduction, 19.35 → 0.45 min NVA / 98% reduction,
+          913 → 130 ft Team Lead travel / 86% reduction, 390 → 80 ft Forklift travel / 80% reduction).
+          Any deltas observed in older drafts have been corrected. Diagrams open in draw.io
+          (free, web-based, no install required at app.diagrams.net).
         </div>
       </div>
     </>
