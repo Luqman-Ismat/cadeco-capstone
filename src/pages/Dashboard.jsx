@@ -133,19 +133,19 @@ function OverviewTab() {
     <>
       <SectionTitle sub="01 / Headline Metrics">Operational summary at a glance</SectionTitle>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 14, marginBottom: 32 }}>
-        <StatCard label="Cycle Time Reduction" value="72%" subValue="27.43 → 7.64 min" delta="−19.79 min / batch" accent={C.green} icon={Clock} />
-        <StatCard label="NVA Eliminated" value="98%" subValue="19.35 → 0.45 min" delta="3 root causes" accent={C.red} icon={AlertTriangle} />
-        <StatCard label="Forklift Travel" value="80%" subValue="390 → 80 ft / cycle" delta="Adjacent racks" accent={C.amber} icon={Truck} />
-        <StatCard label="Capacity Reserved" value="83%" subValue="212 of 256 slots" delta="Room to grow" accent={C.blue} icon={Layers} />
+        <StatCard label="Cycle Time Reduction" value="58%" subValue="27.43 → 11.54 min" delta="−15.89 min / batch" accent={C.green} icon={Clock} />
+        <StatCard label="NVA Reduced" value="78%" subValue="19.35 → 4.35 min" delta="Redo + Alt eliminated" accent={C.red} icon={AlertTriangle} />
+        <StatCard label="Forklift Travel" value="94%" subValue="318 → 20 ft / SKU" delta="±66 → ±4 ft (SD)" accent={C.amber} icon={Truck} />
+        <StatCard label="Annual Savings" value="$49.6K" subValue="3.2 mo payback" delta="$13.3K capex" accent={C.blue} icon={Layers} />
       </div>
 
-      <SectionTitle sub="02 / Order Volume">9-week observation period</SectionTitle>
+      <SectionTitle sub="02 / Order Volume">12-week observation period</SectionTitle>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 14, marginBottom: 36 }}>
         <StatCard label="Total Cases"  value={fmt(orderMetrics.totalCases)} subValue="across 7 SKUs" accent={C.red} icon={Box} />
         <StatCard label="Order Lines"  value={fmt(orderMetrics.orderLines)} subValue="distinct lines" accent={C.red} icon={FileText} />
         <StatCard label="Sales Orders" value={fmt(orderMetrics.salesOrders)} subValue="distinct orders" accent={C.red} icon={FileText} />
         <StatCard label="Avg / Order"  value={fmt(orderMetrics.avgPerOrder)} subValue="cases per order" accent={C.muted} />
-        <StatCard label="Cases / Week" value={fmt(orderMetrics.casesPerWeek)} subValue="9-week average" accent={C.muted} />
+        <StatCard label="Cases / Week" value={fmt(orderMetrics.casesPerWeek)} subValue="12-week average" accent={C.muted} />
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', gap: 20 }}>
@@ -185,7 +185,7 @@ function CycleStackChart() {
 function PillarsBlock() {
   const pillars = [
     { num: '01', title: 'Demand Dashboard',  body: 'Pre-shift HIGH/MED/LOW risk scan eliminates the 14.22 min Redo Picks event.' },
-    { num: '02', title: 'Designated Cells',  body: 'Each SKU fixed to R30/R31. Eliminates floor-search and alt-label workaround.' },
+    { num: '02', title: 'Designated Cells',  body: 'All 7 Target SKUs on Rack 30 with fixed cells. Rack 31 Amazon-only. Eliminates floor-search and alt-label workaround.' },
     { num: '03', title: 'Return-to-Cell',    body: 'New +30s NEC step prevents ad-hoc floor staging. Closes the loop.' },
   ];
   return (
@@ -320,9 +320,9 @@ function CycleTab() {
           </BarChart>
         </ResponsiveContainer>
         <p style={{ margin: '14px 0 0', color: C.dim, fontSize: 12, lineHeight: 1.5, fontFamily: FONTS.mono }}>
-          Activity-level rows sum to ~29 min current / ~3 min future — these are the highlighted improvement targets.
-          The headline 27.43 → 7.64 cycle time on the poster is the WorkStudy+ 7 measured per-batch baseline (27.43)
-          minus the savings from these 6 activities (19.79 min).
+          Activity rows sum to the WorkStudy+ 7 measured per-batch baseline. Total cycle compresses from 27.43 → 11.54 min
+          (58% reduction, 15.89 min recovered per batch). Printer walk and Case Building remain — printer
+          relocation is captured separately in the cell layout; case building is the value-added core of the cycle.
         </p>
       </Panel>
 
@@ -466,8 +466,10 @@ function TravelTab() {
         marginTop: 20, padding: 18, background: C.amberBg, borderLeft: `2px solid ${C.amber}`,
         fontSize: 12, color: C.inkDim, fontFamily: FONTS.mono, lineHeight: 1.6,
       }}>
-        <strong style={{ color: C.ink }}>Note on Team Lead figure:</strong> Current 913 ft = 4.35 min printer walk @ 3.5 ft/sec (full walk-time).
-        Proposed 130 ft = printer relocates within cell layout area (~94 ft round-trip) plus ~36 ft of within-zone QC + wrap movement.
+        <strong style={{ color: C.ink }}>Methodology note:</strong> Forklift travel (318 ft → 20 ft per SKU) is the
+        headline metric — measured rectilinearly between rack centroid and staging. Spatial SD collapses from ±66 ft to
+        ±4 ft. Team Lead &quot;travel&quot; represents the 459-ft printer walk, modeled as retained NVA (4.35 min/batch) for
+        conservatism even though the printer physically relocates in the proposed layout.
       </div>
     </>
   );
@@ -488,8 +490,8 @@ function CapacityTab() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 14, marginBottom: 32 }}>
         <StatCard label="Total Capacity" value={`${capacity.total}`} subValue={`${capacity.perRack} per rack`} accent={C.blue} icon={Layers} />
         <StatCard label="Target Active"  value={`${capacity.targetActive}`} subValue="7 SKUs × 2 pallets" accent={C.red} icon={Box} />
-        <StatCard label="Amazon Active"  value={`${capacity.amazonActive}`} subValue="15 SKUs × 2 pallets" accent={C.amber} icon={Box} />
-        <StatCard label="Reserved"       value={`${capacity.reserved}`} subValue="83% available" accent={C.muted} />
+        <StatCard label="Amazon Active"  value={`${capacity.amazonActive}`} subValue="25 SKUs × 2 pallets" accent={C.amber} icon={Box} />
+        <StatCard label="Reserved"       value={`${capacity.reserved}`} subValue={`${((capacity.reserved / capacity.total) * 100).toFixed(0)}% of rack open`} accent={C.muted} />
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', gap: 20 }}>
@@ -520,9 +522,9 @@ function CapacityTab() {
         <Panel subtitle="B. ABC Class placement" title="Velocity-based level assignment" accent={C.amber}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {[
-              { class: 'A', cls_color: C.classA, profile: 'Top 50% of volume', rack: 'Rack 30 preferred', level: 'Level A (ground)', skus: '1' },
-              { class: 'B', cls_color: C.classB, profile: '50–80% of volume',  rack: 'Rack 30 / 31',      level: 'Level A → B',     skus: '2' },
-              { class: 'C', cls_color: C.classC, profile: 'Bottom 20%',        rack: 'Rack 31',           level: 'Level B → C',     skus: '4' },
+              { class: 'A', cls_color: C.classA, profile: 'Top 50% of volume', rack: 'Rack 30 (Target only)', level: 'Level A (ground)', skus: '1' },
+              { class: 'B', cls_color: C.classB, profile: '50–80% of volume',  rack: 'Rack 30 (Target only)', level: 'Level B',        skus: '2' },
+              { class: 'C', cls_color: C.classC, profile: 'Bottom 20%',        rack: 'Rack 30 (Target only)', level: 'Level B',        skus: '4' },
             ].map(c => (
               <div key={c.class} style={{
                 display: 'grid', gridTemplateColumns: '50px 1fr 80px',
@@ -556,20 +558,20 @@ function RolesTab() {
       name: 'Team Lead', icon: Users, color: C.red,
       currentSteps: 6, futureSteps: 7, currentTime: 26.0, futureTime: 26.5,
       newSteps: ['Demand Dashboard check'], eliminatedSteps: [], improvedSteps: [],
-      retainedNVA: 'Printer walk (4.35 → 0.45 min) — printer relocates within cell layout',
+      retainedNVA: 'Printer walk modeled at 4.35 min retained (459 ft round-trip). Conservative — physical printer relocation captured in cell layout.',
     },
     {
       name: 'Case Picker', icon: Box, color: C.amber,
       currentSteps: 6, futureSteps: 5, currentTime: 24.0, futureTime: 7.0,
       newSteps: ['Return Partial to Cell'],
       eliminatedSteps: ['Search Floor for Partial', 'Redo Missing Picks'],
-      improvedSteps: ['Cell Retrieval (130 ft → 60 ft)'], retainedNVA: 'None',
+      improvedSteps: ['Cell Retrieval (130 ft → 25 ft within staging cluster)'], retainedNVA: 'None',
     },
     {
       name: 'Forklift Driver', icon: Truck, color: C.green,
       currentSteps: 7, futureSteps: 6, currentTime: 13.0, futureTime: 9.0,
       newSteps: [], eliminatedSteps: ['Alternative Labels Printed'],
-      improvedSteps: ['Cell Retrieval (390 ft → 80 ft)', 'Wrap Cycle (5.89 → 1.25 min)'],
+      improvedSteps: ['Cell Retrieval (318 ft → 20 ft per SKU)', 'Wrap Cycle (5.89 → 1.25 min)'],
       retainedNVA: 'None',
     },
   ];
@@ -645,7 +647,7 @@ function RolesTab() {
 function TrendsTab() {
   return (
     <>
-      <SectionTitle sub="01 / Weekly Trends">9-week observation period</SectionTitle>
+      <SectionTitle sub="01 / Weekly Trends">12-week observation period</SectionTitle>
       <Panel subtitle="A. Weekly volume" title="Cases shipped per week" accent={C.red}>
         <ResponsiveContainer width="100%" height={300}>
           <AreaChart data={weeklyTrend} margin={{ top: 20, right: 60, left: 60, bottom: 20 }}>

@@ -97,7 +97,7 @@ export default function About() {
             {
               icon: BookOpen,
               title: 'Data Collection',
-              body: 'Pulled 9 weeks of iRely transactional data (1,221 order lines, 229 sales orders, 34,604 cases). Conducted 24 on-site time studies using WorkStudy+ 7 to capture per-step cycle times across all three roles.',
+              body: 'Pulled 12 weeks of iRely transactional data (1,221 order lines, 165 sales orders, ~46,140 cases). Conducted 24 on-site time studies using WorkStudy+ 7 to capture per-step cycle times across all three roles.',
             },
             {
               icon: Target,
@@ -107,7 +107,7 @@ export default function About() {
             {
               icon: Briefcase,
               title: 'Spaghetti Diagrams',
-              body: 'Mapped current-state travel paths for all 3 roles. Forklift Driver alone covered ~390 ft per cycle; Team Lead averaged ~913 ft when including the 4.35-min printer walk. Quantified waste before designing the fix.',
+              body: 'Mapped current-state travel paths for all 3 roles. Forklift Driver averaged 318 ft per SKU retrieval (±66 ft SD); Team Lead walked 459 ft round-trip to the printer every batch. Quantified waste before designing the fix.',
             },
             {
               icon: Award,

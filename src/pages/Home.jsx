@@ -43,7 +43,7 @@ export default function Home() {
             color: C.ink,
             maxWidth: 1100,
           }}>
-            Cutting <span style={{ color: C.red, fontStyle: 'italic', fontWeight: 500 }}>20 minutes</span> off every batch
+            Cutting <span style={{ color: C.red, fontStyle: 'italic', fontWeight: 500 }}>16 minutes</span> off every batch
             at <span style={{ color: C.red }}>Cadeco</span>'s Target picking line.
           </h1>
 
@@ -54,8 +54,8 @@ export default function Home() {
             marginTop: 28, lineHeight: 1.55,
           }}>
             A lean redesign of the partial-pallet workflow at Cadeco Industries' Deer Park facility.
-            We reduced cycle time by 72%, eliminated 98% of non-value-added activity, and cut
-            forklift travel by 80% — without adding headcount or new IT systems.
+            We reduced cycle time by 58%, eliminated 78% of non-value-added activity, and cut
+            forklift travel by 94% — for $13.3K capital and a 3.2-month payback.
           </p>
 
           <div style={{ display: 'flex', gap: 12, marginTop: 40, flexWrap: 'wrap' }}>
@@ -79,9 +79,9 @@ export default function Home() {
           }}>
             {[
               { label: 'CYCLE TIME REDUCTION', value: `${headlineCycle.reduction}%`, sub: `${headlineCycle.current.toFixed(2)} → ${headlineCycle.future.toFixed(2)} min`, color: C.green },
-              { label: 'NVA ELIMINATED',       value: '98%', sub: `${nvaCurrent.toFixed(1)} → ${nvaProposed.toFixed(2)} min`, color: C.red },
-              { label: 'FORKLIFT TRAVEL',      value: '80%', sub: '390 → 80 ft / cycle', color: C.amber },
-              { label: 'CAPACITY HEADROOM',    value: '83%', sub: `${capacity.reserved} of ${capacity.total} slots`, color: C.blue },
+              { label: 'NVA REDUCED',          value: '78%', sub: `${nvaCurrent.toFixed(2)} → ${nvaProposed.toFixed(2)} min`, color: C.red },
+              { label: 'FORKLIFT TRAVEL',      value: '94%', sub: '318 → 20 ft / SKU', color: C.amber },
+              { label: 'PAYBACK',              value: '3.2 mo', sub: '$13.3K capex · $49.6K/yr savings', color: C.blue },
             ].map((s, i) => (
               <div key={i} style={{
                 background: C.surface,
@@ -117,7 +117,7 @@ export default function Home() {
             color: C.ink, margin: 0, lineHeight: 1.1, letterSpacing: '-0.015em',
             maxWidth: 850,
           }}>
-            Where 9 weeks of iRely data and 24 observed cycles met one stubborn warehouse problem.
+            Where 12 weeks of iRely data and 24 observed cycles met one stubborn warehouse problem.
           </h2>
 
           <div style={{
@@ -126,15 +126,15 @@ export default function Home() {
           }}>
             <ProblemCard icon={AlertTriangle} title="The problem" color={C.red} bullets={[
               'Pickers searched the floor for partial pallets — no rack assignment existed.',
-              'A 4.35-min printer walk happened on every single batch.',
-              'Wrong-pick events cost 14.22 min of rework, ~2.4 times per week.',
-              'Three roles crisscrossed 1,433 ft of warehouse floor per cycle.',
+              'Team Lead walked 459 ft round-trip to a printer in the wrong place every batch.',
+              'FIFO violations forced redo-picks on ~10% of batches — 14.22 min each.',
+              'Forklift averaged 318 ft per SKU retrieval (±66 ft SD) across racks 17–21.',
             ]} />
             <ProblemCard icon={CheckCircle2} title="The solution" color={C.green} bullets={[
-              'Designated cells in Racks 30 & 31 — every Target SKU has a fixed home.',
-              'Demand Prediction Dashboard — pre-shift HIGH/MED/LOW risk scan.',
-              'Adjacent rack relocation — racks moved beside the staging area.',
-              'Semi-automatic stretch wrapper — 5.89 → 1.25 min per pallet.',
+              'Customer-separated racks — Rack 30 = Target only, Rack 31 = Amazon only.',
+              'Demand Prediction Dashboard — pre-shift SKU reorder-risk scan.',
+              'Adjacent rack relocation — 25-ft staging cluster replaces 318-ft retrieval.',
+              'Lantech Q-300 semi-auto wrap machine — 5.89 → 1.25 min per pallet.',
             ]} />
           </div>
         </div>
@@ -160,7 +160,7 @@ export default function Home() {
               { num: '01', icon: Zap,    title: 'Demand Dashboard',
                 body: 'Pre-shift HIGH/MED/LOW risk scan. Stockout risk surfaces before the order line drops, eliminating the 14.22 min Redo Picks event entirely.' },
               { num: '02', icon: MapPin, title: 'Designated Cells',
-                body: 'Each SKU fixed to a known Rack 30 or Rack 31 cell address. Floor-search dies. The "Alt. Picklist" iRely workaround disappears.' },
+                body: 'All 7 Target SKUs live on Rack 30. Each has a fixed cell address (R30-C01-A through R30-C13-B). Floor-search dies. The Alt. Picklist iRely workaround disappears.' },
               { num: '03', icon: Layers, title: 'Return-to-Cell',
                 body: 'New +30s NEC step prevents ad-hoc floor staging. Closes the loop. Partials always go back to the same physical address.' },
             ].map(p => {

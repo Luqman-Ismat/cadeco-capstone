@@ -118,10 +118,9 @@ export default function Downloads() {
           lineHeight: 1.6, fontFamily: FONTS.mono,
         }}>
           <strong style={{ color: C.ink }}>Note for sponsors:</strong> All numbers in these deliverables are reconciled to
-          the locked poster baseline (27.43 → 7.64 min cycle / 72% reduction, 19.35 → 0.45 min NVA / 98% reduction,
-          913 → 130 ft Team Lead travel / 86% reduction, 390 → 80 ft Forklift travel / 80% reduction).
-          Any deltas observed in older drafts have been corrected. Diagrams open in draw.io
-          (free, web-based, no install required at app.diagrams.net).
+          the final defense presentation (May 5, 2026): 27.43 → 11.54 min cycle (−58%), 19.35 → 4.35 min NVA (−78%),
+          318 → 20 ft forklift travel per SKU (−94%), $13.3K capex with 3.2-month payback. Spatial SD collapses
+          from ±66 ft to ±4 ft. Diagrams open in draw.io (free, web-based, no install required at app.diagrams.net).
         </div>
       </div>
     </>
